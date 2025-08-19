@@ -1,4 +1,4 @@
-package ch.tbz.gino_goncalo.D1.PflanzenManager;
+package ch.tbz.gino_goncalo.D1.pflanzenmanager;
 
 public class Pflanze {
     private String name;

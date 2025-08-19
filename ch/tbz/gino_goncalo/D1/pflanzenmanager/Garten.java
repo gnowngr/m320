@@ -1,9 +1,9 @@
-package ch.tbz.gino_goncalo.D1.PflanzenManager;
+package ch.tbz.gino_goncalo.D1.pflanzenmanager;
 
 import java.util.List;
 
 public class Garten {
-    private List<Pflanze> pflanzen;
+    private final List<Pflanze> pflanzen;
 
     public Garten(List<Pflanze> pflanzen) {
         this.pflanzen = pflanzen;
@@ -16,6 +16,7 @@ public class Garten {
 
     public void pflegeAllePflanzen() {
         for (Pflanze pflanze : pflanzen) {
+            pflanze.duengen();
             pflanze.giessen();
         }
     }
