@@ -1,0 +1,50 @@
++--------------------------------------------------+
+|                      Garage                       |
++--------------------------------------------------+
+| - name: String                                    |
+| - byPlate: Map<String, Vehicle>                  |
+| - vehicles: List<Vehicle>                         |
++--------------------------------------------------+
+| + Garage(name: String)                            |
+| + getName(): String                               |
+| + registerVehicle(v: Vehicle): boolean           |
+| + get(licensePlate: String): Vehicle             |
+| + repairVehicle(licensePlate: String, costs: double): boolean |
+| + damageVehicle(licensePlate: String, amount: int): boolean |
+| + allVehicles(): List<Vehicle>                   |
+| + repairedVehicles(): List<Vehicle>              |
+| + pendingVehicles(): List<Vehicle>                |
+| + totalRepairCosts(): double                      |
+| + printOverview(): void                           |
++--------------------------------------------------+
+
+          1
+          |
+          |
+          *
++--------------------------------------------------+
+|                      Vehicle                      |
++--------------------------------------------------+
+| - licensePlate: String                            |
+| - brand: String                                   |
+| - model: String                                   |
+| - color: String                                   |
+| - condition: int                                  |
+| - repaired: boolean                               |
+| - repairCosts: double                             |
++--------------------------------------------------+
+| + Vehicle(licensePlate: String, brand: String,   |
+|   model: String, color: String, condition: int)  |
+| + Vehicle(licensePlate: String, brand: String,   |
+|   model: String, color: String)                   |
+| + getLicensePlate(): String                       |
+| + getBrand(): String                              |
+| + getModel(): String                              |
+| + getColor(): String                              |
+| + getCondition(): int                             |
+| + isRepaired(): boolean                           |
+| + getRepairCosts(): double                        |
+| + damage(amount: int): void                       |
+| + repair(costs: double): void                     |
+| + toString(): String                              |
++--------------------------------------------------+
