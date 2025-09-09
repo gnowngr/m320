@@ -1,3 +1,6 @@
+package ch.tbz.gino_goncalo.D1.garagesimulator;
+
+
 public class ElectricCar extends Car {
     private final int batteryKwh;
 
