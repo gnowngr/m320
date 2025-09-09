@@ -15,13 +15,15 @@ public class Garten {
     }
 
     public void pflegeAllePflanzen() {
+        System.out.println("\n--- Alle Pflanzen werden gepflegt ---");
         for (Pflanze pflanze : pflanzen) {
-            pflanze.duengen();
             pflanze.giessen();
+            pflanze.duengen();
         }
     }
 
     public void zeigeGesundheitszustand() {
+        System.out.println("\n--- Gesundheitszustand der Pflanzen ---");
         for (Pflanze pflanze : pflanzen) {
             System.out.println(pflanze.getName() + " ist " + pflanze.getGesundheitszustand() + ".");
         }

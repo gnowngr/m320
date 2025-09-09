@@ -1,0 +1,42 @@
++-------------------------------------+
+|               Garten                |
++-------------------------------------+
+| - pflanzen: List<Pflanze>           |
++-------------------------------------+
+| + Garten(pflanzen: List<Pflanze>)   |
+| + pflanzenHinzufuegen(pflanze: Pflanze): void |
+| + pflegeAllePflanzen(): void         |
+| + zeigeGesundheitszustand(): void     |
++-------------------------------------+
+
+          1
+          |
+          |
+          *
++-------------------------------------+
+|               Pflanze               |
++-------------------------------------+
+| - name: String                      |
+| - art: String                       |
+| - wasserbedarf: String              |
+| - lichtbedarf: String               |
+| - gesundheitszustand: String        |
++-------------------------------------+
+| + Pflanze(name: String, art: String, |
+|   wasserbedarf: String,              |
+|   lichtbedarf: String,               |
+|   gesundheitszustand: String)        |
+| + getName(): String                  |
+| + setName(name: String): void        |
+| + getArt(): String                   |
+| + setArt(art: String): void          |
+| + getWasserbedarf(): String          |
+| + setWasserbedarf(wasserbedarf: String): void |
+| + getLichtbedarf(): String           |
+| + setLichtbedarf(lichtbedarf: String): void |
+| + getGesundheitszustand(): String    |
+| + setGesundheitszustand(gesundheitszustand: String): void |
+| + giessen(): void                    |
+| + duengen(): void                    |
+| + prüfenGesundheit(): void           |
++-------------------------------------+

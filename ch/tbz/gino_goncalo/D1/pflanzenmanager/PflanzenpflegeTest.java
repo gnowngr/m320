@@ -7,9 +7,9 @@ public class PflanzenpflegeTest {
     public static void main(String[] args) {
         List<Pflanze> pflanzenListe = new ArrayList<>();
 
-        Pflanze rose = new Pflanze("Rose", "Blume", "mittel", "viel", "gesund");
-        Pflanze kaktus = new Pflanze("Kaktus", "Sukkulente", "wenig", "wenig", "gesund");
-        Pflanze tulpe = new Pflanze("Tulpe", "Blume", "hoch", "mittel", "krank");
+        Blume rose = new Blume("Rose", "mittel", "viel", "gesund", "rot");
+        Sukkulente kaktus = new Sukkulente("Kaktus", "wenig", "sehr viel", "gesund", true);
+        Blume tulpe = new Blume("Tulpe", "hoch", "mittel", "krank", "gelb");
 
         pflanzenListe.add(rose);
         pflanzenListe.add(kaktus);
@@ -18,11 +18,10 @@ public class PflanzenpflegeTest {
         Garten garten = new Garten(pflanzenListe);
 
         garten.zeigeGesundheitszustand();
-
         garten.pflegeAllePflanzen();
 
-        for (Pflanze pflanze : pflanzenListe) {
-            pflanze.prüfenGesundheit();
-        }
+        System.out.println("\n--- Test von Überladung ---");
+        rose.giessen();
+        rose.giessen(150);
     }
 }
