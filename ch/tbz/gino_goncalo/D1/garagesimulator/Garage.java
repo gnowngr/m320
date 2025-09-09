@@ -1,3 +1,5 @@
+package ch.tbz.gino_goncalo.D1.garagesimulator;
+
 import java.util.*;
 
 public class Garage {

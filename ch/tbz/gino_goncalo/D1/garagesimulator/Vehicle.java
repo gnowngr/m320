@@ -1,3 +1,5 @@
+package ch.tbz.gino_goncalo.D1.garagesimulator;
+
 public abstract class Vehicle {
     private final String licensePlate;
     private final String brand;

@@ -1,3 +1,5 @@
+package ch.tbz.gino_goncalo.D1.garagesimulator;
+
 public class GarageSimulator {
     public static void main(String[] args) {
         Garage g = new Garage("M320 Garage");

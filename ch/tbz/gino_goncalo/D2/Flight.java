@@ -6,7 +6,7 @@ import java.util.List;
 public class Flight {
     private String flightNumber;
     private String destination;
-    private List<ch.tbz.gino_goncalo.D2.Passenger> passengers;
+    private List<Passenger> passengers;
 
     public Flight(String flightNumber, String destination) {
         this.flightNumber = flightNumber;
@@ -22,11 +22,11 @@ public class Flight {
         return destination;
     }
 
-    public List<ch.tbz.gino_goncalo.D2.Passenger> getPassengers() {
+    public List<Passenger> getPassengers() {
         return passengers;
     }
 
-    public void addPassenger(ch.tbz.gino_goncalo.D2.Passenger passenger) {
+    public void addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
     }
 
