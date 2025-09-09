@@ -1,6 +1,4 @@
-package ch.tbz.gino_goncalo.D1.garagesimulator;
-
-public class Vehicle {
+public abstract class Vehicle {
     private final String licensePlate;
     private final String brand;
     private final String model;
@@ -49,6 +47,13 @@ public class Vehicle {
         repaired = true;
         repairCosts = costs;
         if (condition < 100) condition = Math.min(100, condition + 20); // kleine Verbesserung
+    }
+
+    // Überladen: Standard-Berechnung über Zustand
+    public double calculateRepairCost() {
+        // Basis abhängig vom Schaden (100 - condition) und einfacher Faktor
+        double damageFactor = Math.max(0, 100 - condition);
+        return 100 + damageFactor * 5; // Default-Formel, kann überschrieben werden
     }
 
     @Override

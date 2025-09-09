@@ -1,5 +1,3 @@
-package ch.tbz.gino_goncalo.D1.garagesimulator;
-
 import java.util.*;
 
 public class Garage {
@@ -32,6 +30,26 @@ public class Garage {
         if (v == null) return false;
         v.repair(costs);
         return true;
+    }
+
+    // Überladen: Reparaturkosten polymorph berechnen lassen
+    public boolean repairVehicle(String licensePlate) {
+        Vehicle v = get(licensePlate);
+        if (v == null) return false;
+        double costs = v.calculateRepairCost();
+        v.repair(costs);
+        return true;
+    }
+
+    // Alle reparieren, Summe zurückgeben
+    public double repairAll() {
+        double sum = 0.0;
+        for (Vehicle v : vehicles) {
+            double c = v.calculateRepairCost();
+            v.repair(c);
+            sum += c;
+        }
+        return sum;
     }
 
     public boolean damageVehicle(String licensePlate, int amount) {
