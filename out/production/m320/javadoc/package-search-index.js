@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ch.tbz.gino_goncalo.D1.garagesimulator"},{"l":"ch.tbz.gino_goncalo.D1.pflanzenmanager"},{"l":"ch.tbz.gino_goncalo.D2"},{"l":"ch.tbz.gino_goncalo.Q1.arbeitszeiterfassung"},{"l":"ch.tbz.gino_goncalo.V1.fahrzeug"},{"l":"ch.tbz.gino_goncalo.V1.student"}];updateSearchResults();
