@@ -1,0 +1,10 @@
+*.class
+out/
+target/
+*.iml
+.idea/
+.DS_Store
+*.log
+*.jar
+*.war
+*.ear
