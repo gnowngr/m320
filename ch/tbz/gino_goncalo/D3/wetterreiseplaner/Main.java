@@ -1,10 +1,10 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner;
 
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.api.ApiClient;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.logic.TravelPlanner;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.service.WeatherService;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.ui.UserInterface;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.validation.InputValidator;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.api.ApiClient;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.logic.TravelPlanner;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.service.WeatherService;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.ui.UserInterface;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.validation.InputValidator;
 
 public class Main {
 

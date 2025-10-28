@@ -1,6 +1,6 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner.api;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner.api;
 
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.model.WeatherData;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.model.WeatherData;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

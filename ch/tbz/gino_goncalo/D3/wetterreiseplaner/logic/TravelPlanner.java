@@ -1,7 +1,7 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner.logic;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner.logic;
 
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.model.WeatherData;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.service.WeatherService;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.model.WeatherData;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.service.WeatherService;
 
 public class TravelPlanner {
     private WeatherService weatherService;

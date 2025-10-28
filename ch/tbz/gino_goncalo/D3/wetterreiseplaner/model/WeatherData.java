@@ -1,4 +1,4 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner.model;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner.model;
 
 public class WeatherData {
     private String cityName;

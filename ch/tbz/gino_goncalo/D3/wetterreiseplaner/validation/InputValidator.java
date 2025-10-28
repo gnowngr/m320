@@ -1,7 +1,7 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner.validation;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner.validation;
 
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.exceptions.InvalidCityNameException;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.exceptions.InvalidTemperatureRangeException;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.exceptions.InvalidCityNameException;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.exceptions.InvalidTemperatureRangeException;
 
 public class InputValidator {
 

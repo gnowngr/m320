@@ -1,7 +1,7 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner.service;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner.service;
 
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.api.ApiClient;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.model.WeatherData;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.api.ApiClient;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.model.WeatherData;
 
 public class WeatherService {
     private ApiClient apiClient;

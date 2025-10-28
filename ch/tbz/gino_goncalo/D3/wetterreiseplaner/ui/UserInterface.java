@@ -1,9 +1,9 @@
-package ch.tbz.gino_goncalo.Q3.wetterreiseplaner.ui;
+package ch.tbz.gino_goncalo.D3.wetterreiseplaner.ui;
 
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.exceptions.InvalidCityNameException;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.exceptions.InvalidTemperatureRangeException;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.logic.TravelPlanner;
-import ch.tbz.gino_goncalo.Q3.wetterreiseplaner.validation.InputValidator;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.exceptions.InvalidCityNameException;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.exceptions.InvalidTemperatureRangeException;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.logic.TravelPlanner;
+import ch.tbz.gino_goncalo.D3.wetterreiseplaner.validation.InputValidator;
 import java.util.Scanner;
 
 public class UserInterface {
