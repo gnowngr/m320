@@ -1,4 +1,6 @@
-﻿import java.time.LocalDate;
+package ch.tbz.gino_goncalo.Gino.D3;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class App {

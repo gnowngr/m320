@@ -1,4 +1,6 @@
-﻿public class Recommendation {
+package ch.tbz.gino_goncalo.Gino.D3;
+
+public class Recommendation {
   private final String summary;
   private final String details;
 

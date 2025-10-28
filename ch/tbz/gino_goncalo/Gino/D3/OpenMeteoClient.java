@@ -1,4 +1,6 @@
-﻿import java.net.http.HttpClient;
+package ch.tbz.gino_goncalo.Gino.D3;
+
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
