@@ -2,30 +2,44 @@ package ch.tbz.gino_goncalo.D1.pflanzenmanager;
 
 import java.util.List;
 
+/**
+ * Repräsentiert einen Garten, in dem mehrere {@link Pflanze} verwaltet werden.
+ */
 public class Garten {
-    private final List<Pflanze> pflanzen;
 
+    /** Liste aller Pflanzen im Garten. */
+    private List<Pflanze> pflanzen;
+
+    /**
+     * Erstellt einen neuen Garten mit einer Liste von Pflanzen.
+     *
+     * @param pflanzen die Anfangsliste der Pflanzen
+     */
     public Garten(List<Pflanze> pflanzen) {
         this.pflanzen = pflanzen;
     }
 
+    /**
+     * Fügt eine neue Pflanze zum Garten hinzu.
+     *
+     * @param pflanze die hinzuzufügende Pflanze
+     */
     public void pflanzenHinzufuegen(Pflanze pflanze) {
         pflanzen.add(pflanze);
-        System.out.println(pflanze.getName() + " wurde zum Garten hinzugefügt.");
     }
 
+    /** Pflegt alle Pflanzen im Garten durch Gießen und Düngen. */
     public void pflegeAllePflanzen() {
-        System.out.println("\n--- Alle Pflanzen werden gepflegt ---");
-        for (Pflanze pflanze : pflanzen) {
-            pflanze.giessen();
-            pflanze.duengen();
+        for (Pflanze p : pflanzen) {
+            p.giessen();
+            p.duengen();
         }
     }
 
+    /** Zeigt für alle Pflanzen den aktuellen Gesundheitszustand. */
     public void zeigeGesundheitszustand() {
-        System.out.println("\n--- Gesundheitszustand der Pflanzen ---");
-        for (Pflanze pflanze : pflanzen) {
-            System.out.println(pflanze.getName() + " ist " + pflanze.getGesundheitszustand() + ".");
+        for (Pflanze p : pflanzen) {
+            p.prüfenGesundheit();
         }
     }
 }

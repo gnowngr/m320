@@ -1,159 +1,107 @@
 package ch.tbz.gino_goncalo.D2;
 
-import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Console application for managing flights and passengers.
+ * Provides an interactive menu to create flights, add/passengers, and view flights.
+ */
 public class FlightApp {
+
+    /** The schedule containing all flights. */
     private Schedule schedule;
-    private Scanner scanner;
 
-    public static void main(String[] args) {
-        FlightApp app = new FlightApp();
-        app.run();
-    }
-
+    /**
+     * Constructs a new application with an empty schedule.
+     */
     public FlightApp() {
-        this.schedule = new Schedule();
-        this.scanner = new Scanner(System.in);
-        generateInitialData();
+        schedule = new Schedule();
     }
 
-    private void generateInitialData() {
-        Flight flight1 = new Flight("LX1830", "Berlin");
-        flight1.addPassenger(new Passenger("Anna Müller"));
-        flight1.addPassenger(new Passenger("Peter Weber"));
-
-        Flight flight2 = new Flight("WK288", "Mallorca");
-        flight2.addPassenger(new Passenger("Maria Schmid"));
-
-        schedule.addFlight(flight1);
-        schedule.addFlight(flight2);
-    }
-
+    /**
+     * Starts the application and displays the interactive menu.
+     */
     public void run() {
-        System.out.println("--- Flug-Verwaltungssystem ---");
+        Scanner scanner = new Scanner(System.in);
         boolean running = true;
+
+        System.out.println("Willkommen zur Flugverwaltung!");
+
         while (running) {
-            printMenu();
+            System.out.println("\nWas möchten Sie tun?");
+            System.out.println("1. Flug hinzufügen");
+            System.out.println("2. Passagier hinzufügen");
+            System.out.println("3. Passagier entfernen");
+            System.out.println("4. Flüge anzeigen");
+            System.out.println("5. Beenden");
+            System.out.print("> ");
+
             String choice = scanner.nextLine();
 
             switch (choice) {
                 case "1":
-                    addPassengerToFlight();
+                    System.out.print("Flugnummer: ");
+                    String fn = scanner.nextLine();
+                    System.out.print("Ziel: ");
+                    String dest = scanner.nextLine();
+                    schedule.addFlight(new Flight(fn, dest));
+                    System.out.println("Flug hinzugefügt.");
                     break;
                 case "2":
-                    removePassengerFromFlight();
+                    System.out.print("Flugnummer: ");
+                    fn = scanner.nextLine();
+                    Flight flight = schedule.findFlight(fn);
+                    if (flight != null) {
+                        System.out.print("Passagiername: ");
+                        String name = scanner.nextLine();
+                        flight.addPassenger(new Passenger(name));
+                        System.out.println("Passagier hinzugefügt.");
+                    } else {
+                        System.out.println("Flug nicht gefunden.");
+                    }
                     break;
                 case "3":
-                    showPassengersForFlight();
+                    System.out.print("Flugnummer: ");
+                    fn = scanner.nextLine();
+                    flight = schedule.findFlight(fn);
+                    if (flight != null) {
+                        System.out.print("Passagiername: ");
+                        String name = scanner.nextLine();
+                        if (flight.removePassenger(name)) {
+                            System.out.println("Passagier entfernt.");
+                        } else {
+                            System.out.println("Passagier nicht gefunden.");
+                        }
+                    } else {
+                        System.out.println("Flug nicht gefunden.");
+                    }
                     break;
                 case "4":
-                    searchForPassenger();
+                    System.out.println("\n--- Alle Flüge ---");
+                    for (Flight f : schedule.getAllFlights()) {
+                        System.out.println("Flug: " + f.getFlightNumber() + " -> " + f.getDestination()
+                                + " | Passagiere: " + f.getPassengers().size());
+                    }
                     break;
                 case "5":
-                    listAllFlights();
-                    break;
-                case "6":
+                    System.out.println("Programm beendet.");
                     running = false;
-                    System.out.println("Anwendung wird beendet.");
                     break;
                 default:
-                    System.out.println("Ungültige Eingabe, bitte erneut versuchen.");
-            }
-        }
-    }
-
-    private void printMenu() {
-        System.out.println("\nMenü:");
-        System.out.println("1. Passagier zu einem Flug hinzufügen");
-        System.out.println("2. Passagier von einem Flug entfernen");
-        System.out.println("3. Passagiere für einen Flug anzeigen");
-        System.out.println("4. Nach einem Passagier suchen");
-        System.out.println("5. Alle Flüge anzeigen");
-        System.out.println("6. Beenden");
-        System.out.print("Bitte wählen Sie eine Option: ");
-    }
-
-    private void addPassengerToFlight() {
-        System.out.print("Geben Sie die Flugnummer ein: ");
-        String flightNumber = scanner.nextLine();
-        Flight flight = schedule.findFlight(flightNumber);
-
-        if (flight != null) {
-            System.out.print("Geben Sie den Namen des neuen Passagiers ein: ");
-            String passengerName = scanner.nextLine();
-            flight.addPassenger(new Passenger(passengerName));
-            System.out.println("Passagier '" + passengerName + "' wurde zu Flug " + flightNumber + " hinzugefügt.");
-        } else {
-            System.out.println("Fehler: Flug nicht gefunden.");
-        }
-    }
-
-    private void removePassengerFromFlight() {
-        System.out.print("Geben Sie die Flugnummer ein: ");
-        String flightNumber = scanner.nextLine();
-        Flight flight = schedule.findFlight(flightNumber);
-
-        if (flight != null) {
-            System.out.print("Geben Sie den Namen des zu entfernenden Passagiers ein: ");
-            String passengerName = scanner.nextLine();
-            if (flight.removePassenger(passengerName)) {
-                System.out.println("Passagier '" + passengerName + "' wurde von Flug " + flightNumber + " entfernt.");
-            } else {
-                System.out.println("Fehler: Passagier auf diesem Flug nicht gefunden.");
-            }
-        } else {
-            System.out.println("Fehler: Flug nicht gefunden.");
-        }
-    }
-
-    private void showPassengersForFlight() {
-        System.out.print("Geben Sie die Flugnummer ein, um die Passagiere anzuzeigen: ");
-        String flightNumber = scanner.nextLine();
-        Flight flight = schedule.findFlight(flightNumber);
-
-        if (flight != null) {
-            System.out.println("Passagiere auf Flug " + flight.getFlightNumber() + " nach " + flight.getDestination() + ":");
-            List<Passenger> passengers = flight.getPassengers();
-            if (passengers.isEmpty()) {
-                System.out.println("- Keine Passagiere registriert.");
-            } else {
-                for (Passenger p : passengers) {
-                    System.out.println("- " + p.getName());
-                }
-            }
-        } else {
-            System.out.println("Fehler: Flug nicht gefunden.");
-        }
-    }
-
-    private void searchForPassenger() {
-        System.out.print("Geben Sie den Namen des zu suchenden Passagiers ein: ");
-        String passengerName = scanner.nextLine();
-        boolean found = false;
-
-        for(Flight flight : schedule.getAllFlights()){
-            for(Passenger passenger : flight.getPassengers()){
-                if(passenger.getName().equalsIgnoreCase(passengerName)){
-                    System.out.println("- " + passengerName + " ist auf Flug " + flight.getFlightNumber() + " nach " + flight.getDestination() + " gebucht.");
-                    found = true;
-                }
+                    System.out.println("Ungültige Eingabe. Bitte erneut versuchen.");
+                    break;
             }
         }
 
-        if (!found) {
-            System.out.println("Kein Passagier mit dem Namen '" + passengerName + "' gefunden.");
-        }
+        scanner.close();
     }
 
-    private void listAllFlights() {
-        System.out.println("Verfügbare Flüge:");
-        if (schedule.getAllFlights().isEmpty()){
-            System.out.println("- Keine Flüge im System.");
-        } else {
-            for (Flight flight : schedule.getAllFlights()) {
-                System.out.println("- " + flight);
-            }
-        }
+    /**
+     * The main method that starts the flight management app.
+     *
+     * @param args command line arguments (not used)
+     */
+    public static void main(String[] args) {
+        new FlightApp().run();
     }
 }

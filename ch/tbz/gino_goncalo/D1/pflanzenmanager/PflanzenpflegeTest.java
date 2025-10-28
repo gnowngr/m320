@@ -1,27 +1,34 @@
 package ch.tbz.gino_goncalo.D1.pflanzenmanager;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Testklasse zum Ausprobieren von {@link Pflanze}-Objekten
+ * in einem {@link Garten}.
+ */
 public class PflanzenpflegeTest {
+
+    /**
+     * Creates a new plant care test instance.
+     */
+    public PflanzenpflegeTest() {
+        // Default constructor
+    }
+
+    /**
+     * Startpunkt des Testprogramms.
+     * Erstellt einige Beispielpflanzen und zeigt deren Pflegeablauf.
+     *
+     * @param args nicht verwendet
+     */
     public static void main(String[] args) {
-        List<Pflanze> pflanzenListe = new ArrayList<>();
-
-        Blume rose = new Blume("Rose", "mittel", "viel", "gesund", "rot");
-        Sukkulente kaktus = new Sukkulente("Kaktus", "wenig", "sehr viel", "gesund", true);
-        Blume tulpe = new Blume("Tulpe", "hoch", "mittel", "krank", "gelb");
-
-        pflanzenListe.add(rose);
-        pflanzenListe.add(kaktus);
-        pflanzenListe.add(tulpe);
+        ArrayList<Pflanze> pflanzenListe = new ArrayList<>();
+        pflanzenListe.add(new Blume("Rose", "Mittel", "Sonne", "Gesund", "Rot"));
+        pflanzenListe.add(new Sukkulente("Aloe Vera", "Gering", "Sonne", "Sehr gesund", true));
 
         Garten garten = new Garten(pflanzenListe);
 
-        garten.zeigeGesundheitszustand();
         garten.pflegeAllePflanzen();
-
-        System.out.println("\n--- Test von Überladung ---");
-        rose.giessen();
-        rose.giessen(150);
+        garten.zeigeGesundheitszustand();
     }
 }

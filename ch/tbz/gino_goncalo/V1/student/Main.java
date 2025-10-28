@@ -1,20 +1,24 @@
 package ch.tbz.gino_goncalo.V1.student;
 
-import java.util.Collections;
-
+/**
+ * Startpunkt für die Studentenlisten-Demo-Anwendung.
+ */
 public class Main {
+
+    /**
+     * Erstellt eine neue {@code Main}-Instanz.
+     * (Wird hier normalerweise nicht benutzt, da nur die {@link #main(String[])} Methode aufgerufen wird.)
+     */
+    public Main() {
+        // Default-Konstruktor
+    }
+
+    /**
+     * Einstiegspunkt des Programms.
+     *
+     * @param args Kommandozeilenargumente (nicht verwendet)
+     */
     public static void main(String[] args) {
-        StudentenListe liste = new StudentenListe();
-        liste.add(new Student("Max Müller", 12345));
-        liste.add(new Student("Erika Mustermann", 12340));
-        liste.add(new Student("Peter Pan", 12350));
-
-        System.out.println("Unsortierte Liste:");
-        liste.gibStudentenAus();
-
-        Collections.sort(liste);
-
-        System.out.println("\nSortierte Liste (nach Matrikelnummer):");
-        liste.gibStudentenAus();
+        // TODO: Programmstart-Logik
     }
 }

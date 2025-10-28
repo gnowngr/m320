@@ -1,92 +1,160 @@
 package ch.tbz.gino_goncalo.D1.garagesimulator;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
-
+/**
+ * Represents a garage where vehicles can be registered, damaged, and repaired.
+ */
 public class Garage {
-    private final String name;
-    private final Map<String, Vehicle> byPlate = new HashMap<>();
-    private final List<Vehicle> vehicles = new ArrayList<>();
 
+    /** Name of the garage. */
+    private String name;
+
+    /** List of all vehicles inside the garage. */
+    private List<Vehicle> vehicles = new ArrayList<>();
+
+    /**
+     * Creates a new garage with the given name.
+     *
+     * @param name the name of the garage
+     */
     public Garage(String name) {
-        if (name == null || name.isBlank()) throw new IllegalArgumentException("name");
-        this.name = name.trim();
+        this.name = name;
     }
 
+    /**
+     * Returns the name of this garage.
+     *
+     * @return the name of the garage
+     */
     public String getName() { return name; }
 
+    /**
+     * Registers a new vehicle in the garage.
+     *
+     * @param v the vehicle to register
+     * @return {@code true} if successfully added
+     */
     public boolean registerVehicle(Vehicle v) {
-        String key = v.getLicensePlate().toUpperCase(Locale.ROOT);
-        if (byPlate.containsKey(key)) return false;
-        byPlate.put(key, v);
-        vehicles.add(v);
-        return true;
+        return vehicles.add(v);
     }
 
+    /**
+     * Finds a vehicle by its license plate.
+     *
+     * @param licensePlate the license plate to search for
+     * @return the vehicle with the specified license plate or {@code null} if not found
+     */
     public Vehicle get(String licensePlate) {
-        if (licensePlate == null) return null;
-        return byPlate.get(licensePlate.toUpperCase(Locale.ROOT));
+        return vehicles.stream()
+                .filter(v -> v.getLicensePlate().equalsIgnoreCase(licensePlate))
+                .findFirst().orElse(null);
     }
 
+    /**
+     * Repairs a vehicle with custom repair costs.
+     *
+     * @param licensePlate the license plate of the vehicle
+     * @param costs the repair costs to charge
+     * @return {@code true} if the vehicle was found and repaired
+     */
     public boolean repairVehicle(String licensePlate, double costs) {
         Vehicle v = get(licensePlate);
-        if (v == null) return false;
-        v.repair(costs);
-        return true;
+        if (v != null) {
+            v.setCondition(100);
+            return true;
+        }
+        return false;
     }
 
-    // Überladen: Reparaturkosten polymorph berechnen lassen
+    /**
+     * Repairs a vehicle using its calculated repair cost.
+     *
+     * @param licensePlate the license plate of the vehicle
+     * @return {@code true} if the vehicle was found and repaired
+     */
     public boolean repairVehicle(String licensePlate) {
         Vehicle v = get(licensePlate);
-        if (v == null) return false;
-        double costs = v.calculateRepairCost();
-        v.repair(costs);
-        return true;
-    }
-
-    // Alle reparieren, Summe zurückgeben
-    public double repairAll() {
-        double sum = 0.0;
-        for (Vehicle v : vehicles) {
-            double c = v.calculateRepairCost();
-            v.repair(c);
-            sum += c;
+        if (v != null) {
+            v.calculateRepairCost();
+            v.setCondition(100);
+            return true;
         }
-        return sum;
+        return false;
     }
 
+    /**
+     * Repairs all vehicles in the garage and calculates total cost.
+     *
+     * @return total repair costs for all vehicles
+     */
+    public double repairAll() {
+        double total = 0;
+        for (Vehicle v : vehicles) {
+            total += v.calculateRepairCost();
+            v.setCondition(100);
+        }
+        return total;
+    }
+
+    /**
+     * Damages a vehicle by reducing its condition.
+     *
+     * @param licensePlate the license plate of the vehicle
+     * @param amount damage amount (decrease of condition)
+     * @return {@code true} if the vehicle was found and damaged
+     */
     public boolean damageVehicle(String licensePlate, int amount) {
         Vehicle v = get(licensePlate);
-        if (v == null) return false;
-        v.damage(amount);
-        return true;
+        if (v != null) {
+            v.setCondition(Math.max(0, v.getCondition() - amount));
+            return true;
+        }
+        return false;
     }
 
-    public List<Vehicle> allVehicles() {
-        return Collections.unmodifiableList(vehicles);
-    }
+    /**
+     * Returns a list of all vehicles in this garage.
+     *
+     * @return list of all vehicles
+     */
+    public List<Vehicle> allVehicles() { return vehicles; }
 
-    public List<Vehicle> repairedVehicles() {
-        List<Vehicle> out = new ArrayList<>();
-        for (Vehicle v : vehicles) if (v.isRepaired()) out.add(v);
-        return out;
-    }
-
+    /**
+     * Returns a list of all vehicles that need repair.
+     *
+     * @return list of vehicles with condition less than 100%
+     */
     public List<Vehicle> pendingVehicles() {
-        List<Vehicle> out = new ArrayList<>();
-        for (Vehicle v : vehicles) if (!v.isRepaired()) out.add(v);
-        return out;
+        return vehicles.stream().filter(v -> v.getCondition() < 100).toList();
     }
 
+    /**
+     * Returns a list of all vehicles that are fully repaired.
+     *
+     * @return list of vehicles with condition equal to 100%
+     */
+    public List<Vehicle> repairedVehicles() {
+        return vehicles.stream().filter(v -> v.getCondition() == 100).toList();
+    }
+
+    /**
+     * Calculates total repair costs for all vehicles without actually repairing them.
+     *
+     * @return total cost of all repairs
+     */
     public double totalRepairCosts() {
-        double sum = 0.0;
-        for (Vehicle v : vehicles) sum += v.getRepairCosts();
-        return sum;
+        return vehicles.stream().mapToDouble(Vehicle::calculateRepairCost).sum();
     }
 
+    /**
+     * Prints a summary of all vehicles in the garage.
+     */
     public void printOverview() {
-        System.out.println("--- Fahrzeuge in " + name + " ---");
-        for (Vehicle v : vehicles) System.out.println(v);
-        System.out.println("Gesamtkosten: " + String.format("%.2f", totalRepairCosts()) + " CHF");
+        System.out.println("Garage " + name + " Übersicht:");
+        for (Vehicle v : vehicles) {
+            System.out.println(v.getLicensePlate() + " (" + v.getBrand() + " " + v.getModel() + ") - Zustand: " + v.getCondition() + "%");
+        }
     }
 }
