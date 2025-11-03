@@ -21,6 +21,8 @@ public class BankingApp {
 
         // Services erstellen (Delegation)
         AccountService accountService = new AccountService(accountRepo, transactionRepo);
+        StockService stockService = new StockService(accountRepo, transactionRepo);
+        TransactionService transactionService = new TransactionService(transactionRepo);
 
         try {
             // Demo: Konten erstellen
@@ -59,6 +61,23 @@ public class BankingApp {
             System.out.println("Girokonto Zinsen: CHF " + giro.calculateInterest());
             System.out.println("Sparkonto Zinsen: CHF " + spar.calculateInterest());
             System.out.println("Depot Zinsen: CHF " + depot.calculateInterest());
+
+            // Demo: Aktienhandel
+            System.out.println("\n6. Aktienhandel...");
+            stockService.buyStock(depot.getIban(), "AAPL", "Apple Inc.", 10, 150.0);
+            stockService.buyStock(depot.getIban(), "GOOGL", "Alphabet Inc.", 5, 2800.0);
+            System.out.println("Depot Saldo nach Kauf: CHF " + depot.getBalance());
+
+            // Zeige Portfolio
+            Depot depotAccount = (Depot) depot;
+            System.out.println("\nPortfolio:");
+            for(Stock stock : depotAccount.getStocks()) {
+                System.out.println("  " + stock);
+            }
+
+            // Demo: Transaktionshistorie
+            System.out.println("\n7. Transaktionshistorie Depot:");
+            transactionService.printTransactionHistory(depot.getIban());
 
             System.out.println("\n=== Demo erfolgreich abgeschlossen ===");
 
