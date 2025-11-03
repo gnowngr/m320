@@ -8,3 +8,20 @@ target/
 *.jar
 *.war
 *.ear
+
+# M4 Project - ignore markdown files
+*.md
+
+# M4 Project - ignore images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+
+# M4 Project - ignore context and screenshots folders
+ch/tbz/gino_goncalo/M4_Gonçalo/context/
+ch/tbz/gino_goncalo/M4_Gonçalo/screenshots/
+**/screenshots/
+**/context/
