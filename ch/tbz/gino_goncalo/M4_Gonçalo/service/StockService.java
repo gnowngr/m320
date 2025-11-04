@@ -7,17 +7,26 @@ import ch.tbz.gino_goncalo.M4_Gonçalo.exception.*;
 
 /**
  * Service fuer Aktienhandel
- * Delegation: Delegiert an Repository
+ * Delegation: Delegiert an Repository UND externe API
  * Clean Code: SRP - nur Stock-Business-Logik
+ *
+ * API Integration: Verwendet StockAPI Interface fuer externe Kursdaten
  */
 public class StockService {
 
     private AccountRepository accountRepository;
     private TransactionRepository transactionRepository;
+    private StockAPI stockAPI;
 
-    public StockService(AccountRepository accountRepository, TransactionRepository transactionRepository) {
+    public StockService(AccountRepository accountRepository, TransactionRepository transactionRepository, StockAPI stockAPI) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.stockAPI = stockAPI;
+    }
+
+    // Legacy Konstruktor ohne API (fuer Tests)
+    public StockService(AccountRepository accountRepository, TransactionRepository transactionRepository) {
+        this(accountRepository, transactionRepository, new YahooFinanceAPI());
     }
 
     /**
@@ -145,5 +154,73 @@ public class StockService {
                 return;
             }
         }
+    }
+
+    /**
+     * Kauft Aktie mit aktuellem Preis von API
+     * Delegation: Holt Preis von externer API
+     * API Integration demonstriert hier!
+     */
+    public void buyStockWithAPI(String depotIban, String symbol, int quantity)
+        throws AccountNotFoundException, InsufficientFundsException, InvalidAmountException {
+
+        // Validiere Symbol mit API
+        if(!stockAPI.isValidSymbol(symbol)) {
+            throw new InvalidAmountException("Ungültiges Aktien-Symbol: " + symbol);
+        }
+
+        // Hole aktuellen Preis von API
+        double currentPrice = stockAPI.getCurrentPrice(symbol);
+        if(currentPrice <= 0) {
+            throw new InvalidAmountException("Konnte Preis nicht von API laden!");
+        }
+
+        // Hole Company Name von API
+        String companyName = stockAPI.getCompanyName(symbol);
+
+        System.out.println("API: Aktueller Preis fuer " + symbol + ": CHF " + currentPrice);
+
+        // Verwende normale buyStock Methode mit API-Preis
+        buyStock(depotIban, symbol, companyName, quantity, currentPrice);
+    }
+
+    /**
+     * Aktualisiert alle Aktienkurse von API
+     */
+    public void refreshAllStockPrices(String depotIban)
+        throws AccountNotFoundException, InvalidAmountException {
+
+        Account account = accountRepository.findByIban(depotIban);
+        if(!(account instanceof Depot)) {
+            throw new InvalidAmountException("Konto ist kein Depot!");
+        }
+        Depot depot = (Depot) account;
+
+        System.out.println("\nAktualisiere Kurse von API...");
+
+        for(Stock stock : depot.getStocks()) {
+            double newPrice = stockAPI.getCurrentPrice(stock.getSymbol());
+            if(newPrice > 0) {
+                stock.setCurrentPrice(newPrice);
+                System.out.println(stock.getSymbol() + ": CHF " + newPrice);
+            }
+        }
+
+        System.out.println("Kurse aktualisiert!\n");
+    }
+
+    /**
+     * Zeigt verfuegbare Aktien von API
+     */
+    public void showAvailableStocks() {
+        System.out.println("\n=== Verfuegbare Aktien (von API) ===");
+        String[] symbols = {"AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "META", "NVDA", "NFLX"};
+
+        for(String symbol : symbols) {
+            String company = stockAPI.getCompanyName(symbol);
+            double price = stockAPI.getCurrentPrice(symbol);
+            System.out.println(symbol + " - " + company + " | CHF " + String.format("%.2f", price));
+        }
+        System.out.println("====================================\n");
     }
 }
