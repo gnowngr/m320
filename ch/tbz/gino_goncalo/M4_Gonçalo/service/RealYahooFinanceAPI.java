@@ -59,16 +59,27 @@ public class RealYahooFinanceAPI implements StockAPI {
 
             // Mache ECHTEN HTTP Request
             String urlString = BASE_URL + symbol + "?interval=1d&range=1d";
+            System.out.println("[DEBUG] Requesting: " + urlString);
+
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
 
             int responseCode = conn.getResponseCode();
+            System.out.println("[DEBUG] Response Code: " + responseCode);
+
             if(responseCode != 200) {
                 System.err.println("API Error: HTTP " + responseCode);
+                // Lese Error Response
+                BufferedReader errorReader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                String errorLine;
+                while((errorLine = errorReader.readLine()) != null) {
+                    System.err.println("[ERROR] " + errorLine);
+                }
+                errorReader.close();
                 return -1;
             }
 
@@ -84,18 +95,26 @@ public class RealYahooFinanceAPI implements StockAPI {
 
             // Parse JSON (simple parsing ohne externe Library)
             String jsonResponse = response.toString();
+
+            // Debug: Zeige ersten Teil von Response
+            System.out.println("[DEBUG] Response length: " + jsonResponse.length());
+            System.out.println("[DEBUG] Response preview: " + jsonResponse.substring(0, Math.min(200, jsonResponse.length())));
+
             double price = parsePrice(jsonResponse);
 
             if(price > 0) {
                 priceCache.put(symbol, price);
                 lastCacheUpdate = System.currentTimeMillis();
+                System.out.println("[REAL API] Fetched " + symbol + ": $" + price);
+            } else {
+                System.err.println("[ERROR] Failed to parse price from response");
             }
 
-            System.out.println("[REAL API] Fetched " + symbol + ": $" + price);
             return price;
 
         } catch(Exception e) {
             System.err.println("API Request failed: " + e.getMessage());
+            e.printStackTrace();
             return -1;
         }
     }
