@@ -6,8 +6,19 @@ import ch.tbz.gino_goncalo.M4_Gonçalo.service.*;
 import ch.tbz.gino_goncalo.M4_Gonçalo.exception.*;
 
 /**
- * Main-Klasse fuer Banking System
- * Demonstriert Funktionalitaet des Systems
+ * Main-Klasse fuer M4 Banking System
+ *
+ * Demonstriert alle OOP-Konzepte:
+ * - Polymorphismus: Account-Hierarchie mit ueberschriebenen Methoden
+ * - Delegation: UI -> Service -> Repository -> API
+ * - Design Patterns: Factory Pattern, Repository Pattern
+ * - API Integration: YahooFinanceAPI fuer Aktienkurse
+ * - Exception Handling: Custom Exceptions fuer Fehlerbehandlung
+ * - Clean Code: SRP, Konstanten, sprechende Namen
+ *
+ * @author Gino Gonçalo
+ * @version 1.0
+ * @since 2025
  */
 public class BankingApp {
 
