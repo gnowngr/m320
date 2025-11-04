@@ -21,7 +21,11 @@ public class BankingApp {
 
         // Services erstellen (Delegation)
         AccountService accountService = new AccountService(accountRepo, transactionRepo);
-        StockService stockService = new StockService(accountRepo, transactionRepo);
+
+        // API Integration: Erstelle Stock API fuer Kursdaten
+        StockAPI stockAPI = new YahooFinanceAPI();
+        StockService stockService = new StockService(accountRepo, transactionRepo, stockAPI);
+
         TransactionService transactionService = new TransactionService(transactionRepo);
 
         try {
@@ -62,10 +66,14 @@ public class BankingApp {
             System.out.println("Sparkonto Zinsen: CHF " + spar.calculateInterest());
             System.out.println("Depot Zinsen: CHF " + depot.calculateInterest());
 
-            // Demo: Aktienhandel
-            System.out.println("\n6. Aktienhandel...");
-            stockService.buyStock(depot.getIban(), "AAPL", "Apple Inc.", 10, 150.0);
-            stockService.buyStock(depot.getIban(), "GOOGL", "Alphabet Inc.", 5, 2800.0);
+            // Demo: API Integration - Zeige verfuegbare Aktien
+            System.out.println("\n6. Verfuegbare Aktien von API:");
+            stockService.showAvailableStocks();
+
+            // Demo: Aktienhandel MIT API
+            System.out.println("7. Aktienhandel mit API-Preisen...");
+            stockService.buyStockWithAPI(depot.getIban(), "AAPL", 10);
+            stockService.buyStockWithAPI(depot.getIban(), "GOOGL", 5);
             System.out.println("Depot Saldo nach Kauf: CHF " + depot.getBalance());
 
             // Zeige Portfolio
@@ -75,11 +83,22 @@ public class BankingApp {
                 System.out.println("  " + stock);
             }
 
+            // Demo: API - Aktualisiere Kurse
+            System.out.println("\n8. Aktualisiere Kurse von API:");
+            stockService.refreshAllStockPrices(depot.getIban());
+
+            // Zeige Portfolio nach Update
+            System.out.println("Portfolio nach Kurs-Update:");
+            depotAccount.printPortfolio();
+
             // Demo: Transaktionshistorie
-            System.out.println("\n7. Transaktionshistorie Depot:");
+            System.out.println("9. Transaktionshistorie Depot:");
             transactionService.printTransactionHistory(depot.getIban());
 
             System.out.println("\n=== Demo erfolgreich abgeschlossen ===");
+            System.out.println("API Integration: ✓");
+            System.out.println("Polymorphismus: ✓");
+            System.out.println("Delegation: ✓");
 
         } catch(Exception e) {
             System.err.println("Fehler: " + e.getMessage());
