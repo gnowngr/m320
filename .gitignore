@@ -10,6 +10,7 @@ target/
 *.ear
 
 *.md
+!ch/tbz/gino_goncalo/M4_Gonçalo/README.md
 
 *.png
 *.jpg
