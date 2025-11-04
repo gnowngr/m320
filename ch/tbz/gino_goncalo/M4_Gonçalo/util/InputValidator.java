@@ -68,4 +68,51 @@ public class InputValidator {
     public static boolean isNotEmpty(String str) {
         return str != null && !str.trim().isEmpty();
     }
+
+    /**
+     * Validiert Email Format
+     */
+    public static boolean isValidEmail(String email) {
+        if(email == null || email.trim().isEmpty()) {
+            return false;
+        }
+        // Einfache Email-Validierung
+        return email.contains("@") && email.contains(".");
+    }
+
+    /**
+     * Validiert Aktien-Symbol
+     * Symbole sind 1-5 Grossbuchstaben
+     */
+    public static boolean isValidStockSymbol(String symbol) {
+        if(symbol == null || symbol.isEmpty()) {
+            return false;
+        }
+        // Symbol muss 1-5 Zeichen haben und nur Buchstaben enthalten
+        if(symbol.length() < 1 || symbol.length() > 5) {
+            return false;
+        }
+        return symbol.matches("[A-Z]+");
+    }
+
+    /**
+     * Validiert ob Wert positiv ist
+     */
+    public static boolean isPositive(double value) {
+        return value > 0;
+    }
+
+    /**
+     * Validiert ob Wert nicht negativ ist
+     */
+    public static boolean isNonNegative(double value) {
+        return value >= 0;
+    }
+
+    /**
+     * Validiert Ganzzahl-Bereich
+     */
+    public static boolean isInRange(int value, int min, int max) {
+        return value >= min && value <= max;
+    }
 }
