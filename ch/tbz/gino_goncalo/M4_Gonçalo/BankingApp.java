@@ -33,8 +33,8 @@ public class BankingApp {
         // Services erstellen (Delegation)
         AccountService accountService = new AccountService(accountRepo, transactionRepo);
 
-        // API Integration: Erstelle Stock API fuer Kursdaten
-        StockAPI stockAPI = new YahooFinanceAPI();
+        // API Integration: Erstelle ECHTE Stock API mit echten HTTP Requests!
+        StockAPI stockAPI = new RealYahooFinanceAPI();
         StockService stockService = new StockService(accountRepo, transactionRepo, stockAPI);
 
         TransactionService transactionService = new TransactionService(transactionRepo);
