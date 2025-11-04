@@ -93,7 +93,7 @@ public abstract class Account implements Transactable {
     }
 
     // Setter
-    protected void setBalance(double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
