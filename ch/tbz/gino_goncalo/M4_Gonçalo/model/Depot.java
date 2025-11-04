@@ -83,4 +83,62 @@ public class Depot extends Account {
         }
         return totalValue;
     }
+
+    /**
+     * Berechnet Gesamt-Gewinn/Verlust des Portfolios
+     */
+    public double getTotalProfitLoss() {
+        double total = 0;
+        for(Stock stock : stocks) {
+            total += stock.getProfitLoss();
+        }
+        return total;
+    }
+
+    /**
+     * Berechnet durchschnittliche Portfolio-Performance in Prozent
+     */
+    public double getAveragePerformance() {
+        if(stocks.isEmpty()) {
+            return 0;
+        }
+        double totalPerf = 0;
+        for(Stock stock : stocks) {
+            totalPerf += stock.getProfitLossPercent();
+        }
+        return totalPerf / stocks.size();
+    }
+
+    /**
+     * Findet Stock nach Symbol
+     */
+    public Stock findStockBySymbol(String symbol) {
+        for(Stock stock : stocks) {
+            if(stock.getSymbol().equals(symbol)) {
+                return stock;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gibt Portfolio-Uebersicht aus
+     */
+    public void printPortfolio() {
+        System.out.println("\n=== Portfolio-Uebersicht ===");
+        System.out.println("Cash: CHF " + String.format("%.2f", balance));
+
+        if(stocks.isEmpty()) {
+            System.out.println("Keine Aktien vorhanden.");
+        } else {
+            System.out.println("\nAktien:");
+            for(Stock stock : stocks) {
+                System.out.println("  " + stock);
+            }
+            System.out.println("\nPortfolio-Wert: CHF " + String.format("%.2f", getPortfolioValue()));
+            System.out.println("Gesamt G/V: CHF " + String.format("%.2f", getTotalProfitLoss()));
+            System.out.println("Durchschn. Performance: " + String.format("%.2f%%", getAveragePerformance()));
+        }
+        System.out.println("===========================\n");
+    }
 }
