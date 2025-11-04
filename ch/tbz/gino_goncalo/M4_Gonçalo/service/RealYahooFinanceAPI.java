@@ -125,45 +125,33 @@ public class RealYahooFinanceAPI implements StockAPI {
      */
     private double parsePrice(String json) {
         try {
-            // DEBUG: Print full JSON for analysis
-            System.out.println("[DEBUG] Full JSON Response:");
-            System.out.println(json);
-            System.out.println("[DEBUG] End of JSON\n");
-
-            // Suche nach "regularMarketPrice":{"raw":150.25
+            // Suche nach "regularMarketPrice":269.05
             int priceIndex = json.indexOf("\"regularMarketPrice\"");
-            System.out.println("[DEBUG] regularMarketPrice index: " + priceIndex);
-
             if(priceIndex == -1) {
                 System.err.println("[ERROR] Could not find 'regularMarketPrice' in JSON");
                 return -1;
             }
 
-            // Finde "raw": Wert
-            int rawIndex = json.indexOf("\"raw\":", priceIndex);
-            System.out.println("[DEBUG] raw index: " + rawIndex);
-
-            if(rawIndex == -1) {
-                System.err.println("[ERROR] Could not find 'raw' after regularMarketPrice");
-                // Print context around priceIndex
-                int contextStart = Math.max(0, priceIndex - 50);
-                int contextEnd = Math.min(json.length(), priceIndex + 200);
-                System.err.println("[DEBUG] Context: " + json.substring(contextStart, contextEnd));
+            // Finde Doppelpunkt nach regularMarketPrice
+            int colonIndex = json.indexOf(":", priceIndex);
+            if(colonIndex == -1) {
+                System.err.println("[ERROR] Could not find ':' after regularMarketPrice");
                 return -1;
             }
 
-            // Extrahiere Zahl
-            int start = rawIndex + 6; // Skip "raw":
+            // Extrahiere Zahl direkt nach dem Doppelpunkt
+            int start = colonIndex + 1;
             int end = start;
-            while(end < json.length() && (Character.isDigit(json.charAt(end)) || json.charAt(end) == '.')) {
+
+            // Parse die Zahl (inkl. Dezimalpunkt)
+            while(end < json.length() &&
+                  (Character.isDigit(json.charAt(end)) || json.charAt(end) == '.')) {
                 end++;
             }
 
             String priceStr = json.substring(start, end);
-            System.out.println("[DEBUG] Extracted price string: '" + priceStr + "'");
-
             double price = Double.parseDouble(priceStr);
-            System.out.println("[DEBUG] Parsed price: " + price);
+
             return price;
 
         } catch(Exception e) {
