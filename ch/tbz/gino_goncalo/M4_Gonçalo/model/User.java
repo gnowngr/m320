@@ -16,6 +16,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private String email;
 
     // Delegation: User HAT eine Liste von Accounts
     // Komposition: Accounts werden im Konstruktor initialisiert
@@ -27,6 +28,17 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = "";
+        this.accounts = new ArrayList<>();
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.userId = generateUserId();
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.accounts = new ArrayList<>();
     }
 
@@ -95,6 +107,14 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Account> getAccounts() {
